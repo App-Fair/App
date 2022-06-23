@@ -209,8 +209,8 @@ struct CatalogItemView: View {
                 
                 // in theory, we could also try to pre-flight out expected SHA-256 checksum by checking for a header like "Digest: sha-256=A48E9qOokqqrvats8nOJRJN3OWDUoyWxBf7kbu9DBPE=", but in practice no server ever seems to send it
                 withAnimation {
-                    self.caskURLFileSize = head.expectedContentLength
-                    self.caskURLModifiedDate = head.lastModifiedDate
+                    self.caskURLFileSize = head?.expectedContentLength
+                    self.caskURLModifiedDate = head?.lastModifiedDate
                 }
                 dbg("URL HEAD:", metadata.downloadURL.absoluteString, self.caskURLFileSize?.localizedByteCount(), self.caskURLFileSize, (head as? HTTPURLResponse)?.allHeaderFields as? [String: String])
 

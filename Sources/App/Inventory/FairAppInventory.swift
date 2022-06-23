@@ -13,6 +13,7 @@
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import FairApp
+import FairExpo
 import Dispatch
 import Security
 import Foundation
@@ -740,7 +741,7 @@ extension FairHub {
         if let cache = cache { req.cachePolicy = cache }
         let (data, response) = try await URLSession.shared.data(for: req, delegate: nil)
 
-        let catalog = try AppCatalog(json: data, dateDecodingStrategy: .iso8601)
+        let catalog = try AppCatalog.parse(jsonData: data)
 
         return (catalog, response)
     }

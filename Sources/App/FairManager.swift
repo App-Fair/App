@@ -13,6 +13,7 @@
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import FairApp
+import FairExpo
 import Combine
 
 @available(macOS 12.0, iOS 15.0, *)
@@ -29,7 +30,7 @@ import Combine
     /// The organization name of the hub
     @AppStorage("hubOrg") public var hubOrg = appfairName
     /// The name of the base repository for the provider
-    @AppStorage("hubRepo") public var hubRepo = AppNameValidation.defaultAppName
+    @AppStorage("hubRepo") public var hubRepo = Bundle.appfairDefaultAppName
 
     /// An optional authorization token for direct API usagefor the organization
     @AppStorage("hubToken") public var hubToken = ""

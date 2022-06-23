@@ -15,6 +15,7 @@
 import FairKit
 import Foundation
 import TabularData
+import var FairExpo.appfairCaskAppsURL
 
 /// The minimum number of characters before we will perform a search; helps improve performance for synchronous searches
 let minimumSearchLength = 1
@@ -319,18 +320,18 @@ private let cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy
         self.appstats = try await appstats
         let caskResponse = try await casks
         self.casks = caskResponse.casks
-        self.catalogUpdated = caskResponse.response.lastModifiedDate
+        self.catalogUpdated = caskResponse.response?.lastModifiedDate
 
         self.objectWillChange.send()
     }
 
     /// Fetches the cask list and populates it in the `casks` property
-    func fetchCasks() async throws -> (casks: Array<CaskItem>, response: URLResponse) {
+    func fetchCasks() async throws -> (casks: Array<CaskItem>, response: URLResponse?) {
         dbg("loading cask list")
         let url = self.caskList
         let request = URLRequest(url: url, cachePolicy: cachePolicy)
         let (data, response) = try await URLSession.shared.fetch(request: request)
-        try response.validateHTTPCode()
+        try response?.validateHTTPCode()
 
         dbg("loaded cask JSON", data.count.localizedByteCount(), "from url:", url)
         let casks = try Array<CaskItem>(json: data)
@@ -353,7 +354,7 @@ private let cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy
         let url = appfairCaskAppsURL
         let data = try await URLRequest(url: url, cachePolicy: cachePolicy).fetch()
         dbg("loaded cask JSON", data.count.localizedByteCount(), "from url:", url)
-        let appcasks = try AppCatalog(json: data, dateDecodingStrategy: .iso8601)
+        let appcasks = try AppCatalog.parse(jsonData: data)
         dbg("loaded appcasks:", appcasks.apps.count)
         return appcasks
     }

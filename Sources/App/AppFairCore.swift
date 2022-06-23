@@ -543,8 +543,8 @@ struct NavigationRootView : View {
     @State var scrollToSelection: Bool = false
 
     /// The current selection in the sidebar, defaulting to the `top` item of the initial `AppSource`.
-    //@State var sidebarSelection: SidebarSelection? = SidebarSelection(source: AppSource.allCases.first!, item: .top)
-    @State var sidebarSelection: SidebarSelection? = nil
+    @State var sidebarSelection: SidebarSelection? = SidebarSelection(source: AppSource.allCases.first!, item: .top)
+    //@State var sidebarSelection: SidebarSelection? = nil
 
     @SceneStorage("displayMode") var displayMode: TriptychOrient = TriptychOrient.allCases.first!
     @AppStorage("iconBadge") private var iconBadge = true
@@ -795,14 +795,17 @@ public struct AppDetailView : View {
             }
 
             if let sidebarSelection = sidebarSelection {
-                sidebarSelection.sourceOverviewView(showText: false)
+                let showOverviewText = { true }()
+                sidebarSelection.sourceOverviewView(showText: showOverviewText)
                     .font(.body)
                 Spacer()
 
-                Text("No Selection", bundle: .module, comment: "placeholder text for detail panel indicating there is no app currently selected")
-                    .font(Font.title)
-                    .foregroundColor(Color.secondary)
-                Spacer()
+                if !showOverviewText {
+                    Text("No Selection", bundle: .module, comment: "placeholder text for detail panel indicating there is no app currently selected")
+                        .font(Font.title)
+                        .foregroundColor(Color.secondary)
+                    Spacer()
+                }
             } else {
                 let sb1 = SidebarSelection(source: .homebrew, item: .top)
                 let sb2 = SidebarSelection(source: .fairapps, item: .top)

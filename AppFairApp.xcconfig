@@ -7,10 +7,10 @@ PRODUCT_NAME = App Fair
 PRODUCT_BUNDLE_IDENTIFIER = app.App-Fair
 
 // The semantic version for the app matching the git tag for the release
-MARKETING_VERSION = 0.8.53
+MARKETING_VERSION = 0.8.54
 
 // The monotonically increasing number specifying the internal app version
-CURRENT_PROJECT_VERSION = 780
+CURRENT_PROJECT_VERSION = 781
 
 // The category of the app should be one of: public.app-category.business, developer-tools, education, entertainment, finance, games, graphics-design, healthcare-fitness, lifestyle, medical, music, news, photography, productivity, reference, social-networking, sports, travel, utilities, video, weather
 APP_CATEGORY = public.app-category.utilities
